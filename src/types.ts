@@ -6,3 +6,6 @@ export const attackList = [
   'spock',
 ] as const
 export type Attack = (typeof attackList)[number]
+
+export type Stage = 'picking' | 'result'
+export type Result = 'win' | 'lose' | 'draw'
