@@ -23,7 +23,13 @@ export default function Header({
 
 function Score({ score }: { score: number }) {
   return (
-    <div className="flex flex-col w-20 h-[72px] bg-white rounded-[4px] items-center p-[10px]">
+    <div
+      className={cn(
+        'flex flex-col w-20 h-[72px] rounded-[4px] items-center p-[10px]',
+        'bg-gradient-to-t from-[#f3f3f3] to-white',
+        '[box-shadow:0_3px_3px_0_rgb(0_0_0_/_0.2)]'
+      )}
+    >
       <span className="uppercase text-[10px] text-bluish font-semibold tracking-[1.563px] leading-[normal]">
         Score
       </span>
