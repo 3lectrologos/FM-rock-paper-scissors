@@ -22,16 +22,22 @@ export default function ResultScreen({
         <AttackDisplayWithText attack={attack} text="You picked" />
         <AttackDisplayWithText attack={houseAttack} text="The house picked" />
       </div>
-      {result !== null && (
-        <ResultCard result={result} onPlayAgain={onPlayAgain} />
-      )}
+      <ResultCard
+        className={cn(result === null && 'invisible')}
+        result={result}
+        onPlayAgain={onPlayAgain}
+      />
     </div>
   )
 }
 
 function AttackDisplay({ attack }: { attack: Attack | null }) {
   if (attack === null) {
-    return <div className="w-[110px] h-[110px] bg-white/10" />
+    return (
+      <div className="w-[132px] h-[133px]">
+        <div className="w-[124px] h-[125px] bg-white/10 rounded-full" />
+      </div>
+    )
   }
 
   return <AttackIcon className={cn('w-[132px] h-[133px]')} attack={attack} />
@@ -57,14 +63,16 @@ function AttackDisplayWithText({
 function ResultCard({
   result,
   onPlayAgain,
+  className,
 }: {
-  result: Result
+  result: Result | null
   onPlayAgain: () => void
+  className?: string
 }) {
   return (
-    <div className="flex flex-col gap-y-4 items-center">
+    <div className={cn('flex flex-col gap-y-4 items-center', className)}>
       <span className="text-[56px] text-white font-bold leading-[normal] uppercase">
-        You {result}
+        You {result ?? ''}
       </span>
       <Button
         className={cn(

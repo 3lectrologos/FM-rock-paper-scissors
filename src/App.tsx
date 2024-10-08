@@ -1,5 +1,5 @@
 import ButtonSelector from '@/ButtonSelector.tsx'
-import { Attack, attackList, Stage } from '@/types.ts'
+import { Attack, attackList, Result, Stage } from '@/types.ts'
 import Header from '@/Header.tsx'
 import { useRef, useState } from 'react'
 import Footer from '@/Footer.tsx'
@@ -11,7 +11,11 @@ function getRandomAttack() {
   return attackList[Math.floor(Math.random() * attackList.length)] as Attack
 }
 
-function computeResult(attack: Attack, houseAttack: Attack) {
+function computeResult(attack: Attack | null, houseAttack: Attack | null) {
+  if (attack === null || houseAttack === null) {
+    return null
+  }
+
   if (attack === houseAttack) {
     return 'draw'
   }
@@ -27,13 +31,26 @@ function computeResult(attack: Attack, houseAttack: Attack) {
   return winMap[attack].includes(houseAttack) ? 'win' : 'lose'
 }
 
+function createRandomAttackSequence(length: number, lastAttack: Attack) {
+  const sequence = [lastAttack]
+  for (let i = 0; i < length - 1; i++) {
+    let randomAttack = getRandomAttack()
+    while (randomAttack === sequence[sequence.length - 1]) {
+      randomAttack = getRandomAttack()
+    }
+    sequence.push(randomAttack)
+  }
+  return sequence.reverse()
+}
+
 function App() {
   const [score, setScore] = useState(0)
   const [stage, setStage] = useState<Stage>('picking')
   const [attack, setAttack] = useState<Attack | null>(null)
   const [houseAttack, setHouseAttack] = useState<Attack | null>(null)
-  const container = useRef(null)
+  const [result, setResult] = useState<Result | null>(null)
 
+  const container = useRef(null)
   const timeline = useRef<GSAPTimeline>()
   const { contextSafe } = useGSAP(
     () => {
@@ -42,13 +59,9 @@ function App() {
     { scope: container }
   )
 
-  const result =
-    attack === null || houseAttack === null
-      ? null
-      : computeResult(attack, houseAttack)
-
   const handleAttack = contextSafe((attack: Attack) => {
     setAttack(attack)
+    const randomHouseAttack = getRandomAttack()
 
     if (timeline.current !== undefined) {
       timeline.current.to(`#pentagon,.attack:not(#${attack})`, {
@@ -65,12 +78,27 @@ function App() {
         ease: 'power3.out',
         onComplete: () => {
           setStage('result')
-          const randomAttack = getRandomAttack()
-          setHouseAttack(randomAttack)
-          const result = computeResult(attack, randomAttack)
-          if (result === 'win') {
+        },
+      })
+
+      const randomSequence = createRandomAttackSequence(15, randomHouseAttack)
+      for (const [index, randomAttack] of randomSequence.entries()) {
+        timeline.current.to(`#${attack}`, {
+          duration: 0.05 + 0.005 * index ** 1.5,
+          onComplete: () => {
+            setHouseAttack(randomAttack)
+          },
+        })
+      }
+
+      timeline.current.to(`#${attack}`, {
+        duration: 0.5,
+        onComplete: () => {
+          const currentResult = computeResult(attack, randomHouseAttack)
+          setResult(currentResult)
+          if (currentResult === 'win') {
             setScore(score + 1)
-          } else if (result === 'lose') {
+          } else if (currentResult === 'lose') {
             setScore(score - 1)
           }
         },
@@ -82,6 +110,7 @@ function App() {
     setStage('picking')
     setAttack(null)
     setHouseAttack(null)
+    setResult(null)
   }
 
   return (
