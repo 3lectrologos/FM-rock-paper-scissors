@@ -17,7 +17,7 @@ export default function ResultScreen({
   className?: string
 }) {
   return (
-    <div className={cn('w-full flex flex-col', className)}>
+    <div className={cn('w-[311px] flex flex-col', className)}>
       <div className="flex justify-between mb-[62px]">
         <AttackDisplayWithText attack={attack} text="You picked" />
         <AttackDisplayWithText attack={houseAttack} text="The house picked" />
