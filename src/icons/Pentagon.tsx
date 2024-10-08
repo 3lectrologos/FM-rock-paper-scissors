@@ -5,6 +5,7 @@ export default function Pentagon({ className }: { className?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 329 313"
+      id="pentagon"
       className={cn('stroke-[20px] stroke-black/20', className)}
     >
       <path

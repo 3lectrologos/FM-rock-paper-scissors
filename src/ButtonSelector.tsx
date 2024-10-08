@@ -22,17 +22,18 @@ export default function ButtonSelector({
 
       <AttackButton
         onClick={() => {
+          onClick('scissors')
+        }}
+      >
+        <Scissors className="absolute translate-x-[113.5px] -translate-y-[227px]" />
+      </AttackButton>
+
+      <AttackButton
+        onClick={() => {
           onClick('paper')
         }}
       >
-        <Paper className="absolute right-0 top-0 translate-x-11 translate-y-10" />
-      </AttackButton>
-      <AttackButton
-        onClick={() => {
-          onClick('spock')
-        }}
-      >
-        <Spock className="absolute left-0 top-0 -translate-x-11 translate-y-10" />
+        <Paper className="absolute translate-x-[220px] -translate-y-[140px]" />
       </AttackButton>
 
       <AttackButton
@@ -40,22 +41,23 @@ export default function ButtonSelector({
           onClick('rock')
         }}
       >
-        <Rock className="absolute -right-1 bottom-0 translate-y-10" />
+        <Rock className="absolute translate-x-[180px] -translate-y-[17px]" />
       </AttackButton>
+
       <AttackButton
         onClick={() => {
           onClick('lizard')
         }}
       >
-        <Lizard className="absolute -left-1 bottom-0 translate-y-10" />
+        <Lizard className="absolute translate-x-[47px] -translate-y-[17px]" />
       </AttackButton>
 
       <AttackButton
         onClick={() => {
-          onClick('scissors')
+          onClick('spock')
         }}
       >
-        <Scissors className="absolute right-1/2 top-0 translate-x-1/2 -translate-y-1/2" />
+        <Spock className="absolute translate-x-[7px] -translate-y-[140px]" />
       </AttackButton>
     </div>
   )

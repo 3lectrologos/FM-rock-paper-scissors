@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils.ts'
+
 export default function Lizard({ className }: { className?: string }) {
   return (
     <svg
@@ -6,7 +8,8 @@ export default function Lizard({ className }: { className?: string }) {
       height="103"
       viewBox="0 0 102 103"
       fill="none"
-      className={className}
+      id="lizard"
+      className={cn('attack', className)}
     >
       <g filter="url(#filter0_d_0_687)">
         <ellipse cx="51" cy="48.5" rx="48" ry="48.5" fill="#5F37A8" />

@@ -1,9 +1,11 @@
 import ButtonSelector from '@/ButtonSelector.tsx'
 import { Attack, attackList, Stage } from '@/types.ts'
 import Header from '@/Header.tsx'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Footer from '@/Footer.tsx'
 import ResultScreen from '@/ResultScreen.tsx'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 
 function getRandomAttack() {
   return attackList[Math.floor(Math.random() * attackList.length)] as Attack
@@ -30,24 +32,51 @@ function App() {
   const [stage, setStage] = useState<Stage>('picking')
   const [attack, setAttack] = useState<Attack | null>(null)
   const [houseAttack, setHouseAttack] = useState<Attack | null>(null)
+  const container = useRef(null)
+
+  const timeline = useRef<GSAPTimeline>()
+  const { contextSafe } = useGSAP(
+    () => {
+      timeline.current = gsap.timeline()
+    },
+    { scope: container }
+  )
 
   const result =
     attack === null || houseAttack === null
       ? null
       : computeResult(attack, houseAttack)
 
-  function handleAttack(attack: Attack) {
+  const handleAttack = contextSafe((attack: Attack) => {
     setAttack(attack)
-    const randomAttack = getRandomAttack()
-    setHouseAttack(randomAttack)
-    const result = computeResult(attack, randomAttack)
-    if (result === 'win') {
-      setScore(score + 1)
-    } else if (result === 'lose') {
-      setScore(score - 1)
+
+    if (timeline.current !== undefined) {
+      timeline.current.to(`#pentagon,.attack:not(#${attack})`, {
+        duration: 0.3,
+        opacity: 0,
+        stagger: 0.05,
+      })
+
+      timeline.current.to(`#${attack}`, {
+        duration: 0.2,
+        scale: 1.294,
+        x: 24,
+        y: -213,
+        ease: 'power3.out',
+        onComplete: () => {
+          setStage('result')
+          const randomAttack = getRandomAttack()
+          setHouseAttack(randomAttack)
+          const result = computeResult(attack, randomAttack)
+          if (result === 'win') {
+            setScore(score + 1)
+          } else if (result === 'lose') {
+            setScore(score - 1)
+          }
+        },
+      })
     }
-    setStage('result')
-  }
+  })
 
   function handlePlayAgain() {
     setStage('picking')
@@ -56,7 +85,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-dvh bg-radial flex flex-col px-8 pt-8 pb-14 items-center">
+    <div
+      className="min-h-dvh bg-radial flex flex-col px-8 pt-8 pb-14 items-center"
+      ref={container}
+    >
       <Header className="" score={score} />
 
       {stage === 'picking' ? (
