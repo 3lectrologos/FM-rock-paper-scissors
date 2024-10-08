@@ -64,11 +64,21 @@ function App() {
     const randomHouseAttack = getRandomAttack()
 
     if (timeline.current !== undefined) {
-      timeline.current.to(`#pentagon,.attack:not(#${attack})`, {
-        duration: 0.3,
-        opacity: 0,
-        stagger: 0.05,
+      timeline.current.to(`#${attack}`, {
+        duration: 0.5,
+        scale: 1.2,
+        ease: 'elastic.out(1.2, 0.5)',
       })
+
+      timeline.current.to(
+        `#pentagon,.attack:not(#${attack})`,
+        {
+          duration: 0.3,
+          opacity: 0,
+          stagger: 0.05,
+        },
+        '<'
+      )
 
       timeline.current.to(`#${attack}`, {
         duration: 0.2,
