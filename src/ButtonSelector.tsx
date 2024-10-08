@@ -75,7 +75,9 @@ function AttackButton({
       className="p-0 bg-transparent border-0 rounded-full h-auto w-auto"
       asChild
     >
-      <div onClick={onClick}>{children}</div>
+      <div className="cursor-pointer" onClick={onClick}>
+        {children}
+      </div>
     </Button>
   )
 }

@@ -77,7 +77,8 @@ function ResultCard({
       <Button
         className={cn(
           'w-[220px] h-12 bg-white rounded-[8px]',
-          'text-[16px] text-darkblue font-semibold leading-[normal] tracking-[2.5px] uppercase'
+          'text-[16px] text-darkblue font-semibold leading-[normal] tracking-[2.5px] uppercase',
+          'hover:bg-white hover:text-lightred'
         )}
         onClick={onPlayAgain}
       >

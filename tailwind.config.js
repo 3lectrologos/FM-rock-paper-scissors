@@ -13,6 +13,7 @@ export default {
         bluish: '#2A45C2',
         darkgray: '#565468',
         darkblue: '#3B4262',
+        lightred: '#DB2E4D',
 
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
