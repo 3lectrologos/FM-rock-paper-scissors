@@ -61,7 +61,7 @@ export default {
           'radial-gradient(134.34% 134.34% at 50% 0%, #1F3757 0%, #131537 100%)',
       },
       screens: {
-        desktop: '1440px',
+        tablet: '700px',
       },
     },
   },
