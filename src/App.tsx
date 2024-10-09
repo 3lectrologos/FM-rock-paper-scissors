@@ -67,7 +67,7 @@ function App() {
       timeline.current.to(`#${attack}`, {
         duration: 0.5,
         scale: 1.2,
-        ease: 'elastic.out(1.2, 0.5)',
+        ease: 'elastic.out(1.5, 0.4)',
       })
 
       timeline.current.to(
