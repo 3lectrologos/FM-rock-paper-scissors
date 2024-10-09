@@ -81,10 +81,10 @@ function App() {
       )
 
       timeline.current.to(`#${attack}`, {
-        duration: 0.2,
+        duration: 0.5,
         scale: 1.294,
-        x: 24,
-        y: -213,
+        x: -27,
+        y: -247,
         ease: 'power3.out',
         onComplete: () => {
           setStage('result')

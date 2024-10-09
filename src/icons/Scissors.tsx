@@ -1,5 +1,3 @@
-import { cn } from '@/lib/utils.ts'
-
 export default function Scissors({ className }: { className?: string }) {
   return (
     <svg
@@ -8,8 +6,7 @@ export default function Scissors({ className }: { className?: string }) {
       height="103"
       viewBox="0 0 102 103"
       fill="none"
-      id="scissors"
-      className={cn('attack', className)}
+      className={className}
     >
       <g filter="url(#filter0_d_0_667)">
         <ellipse cx="51" cy="48.5" rx="48" ry="48.5" fill="#C76C1B" />
