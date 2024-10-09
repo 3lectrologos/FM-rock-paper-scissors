@@ -2,6 +2,9 @@ import { Attack, Result } from '@/types.ts'
 import { cn } from '@/lib/utils.ts'
 import { Button } from '@/components/ui/button.tsx'
 import AttackIcon from '@/icons/AttackIcon.tsx'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { useRef } from 'react'
 
 export default function ResultScreen({
   attack,
@@ -69,9 +72,58 @@ function ResultCard({
   onPlayAgain: () => void
   className?: string
 }) {
+  const container = useRef(null)
+  const text = useRef(null)
+  const button = useRef(null)
+
+  useGSAP(
+    () => {
+      if (result === null) {
+        return
+      }
+
+      gsap.fromTo(
+        text.current,
+        {
+          opacity: 0,
+          scale: 3,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.25,
+        }
+      )
+
+      gsap.fromTo(
+        button.current,
+        {
+          scale: 0,
+          opacity: 0,
+          x: -500,
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          delay: 0.25,
+          duration: 0.25,
+          x: 0,
+          ease: 'elastic.out(1, 0.75)',
+        }
+      )
+    },
+    { dependencies: [result], scope: container }
+  )
+
   return (
-    <div className={cn('flex flex-col gap-y-4 items-center', className)}>
-      <span className="text-[56px] text-white font-bold leading-[normal] uppercase">
+    <div
+      className={cn('flex flex-col gap-y-4 items-center', className)}
+      ref={container}
+    >
+      <span
+        className="text-[56px] text-white font-bold leading-[normal] uppercase opacity-0"
+        ref={text}
+      >
         You {result ?? ''}
       </span>
       <Button
@@ -81,6 +133,7 @@ function ResultCard({
           'hover:bg-white hover:text-lightred'
         )}
         onClick={onPlayAgain}
+        ref={button}
       >
         Play Again
       </Button>
