@@ -6,6 +6,7 @@ import Footer from '@/Footer.tsx'
 import ResultScreen from '@/ResultScreen.tsx'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { cn } from '@/lib/utils.ts'
 
 function getRandomAttack() {
   return attackList[Math.floor(Math.random() * attackList.length)] as Attack
@@ -80,18 +81,27 @@ function App() {
         '<'
       )
 
-      timeline.current.to(`#${attack}`, {
-        duration: 0.5,
-        scale: 1.294,
-        x: -27,
-        y: -247,
-        ease: 'power3.out',
-        onComplete: () => {
-          setStage('result')
-        },
-      })
+      timeline.current
+        .to(`#${attack}`, {
+          duration: 0.3,
+          scale: 1.294,
+          translateX: '-26.5%',
+          translateY: '-30%',
+          top: 0,
+          left: 0,
+          ease: 'elastic.out(1, 1)',
+          onComplete: () => {
+            setStage('result')
+          },
+        })
+        .to(
+          {},
+          {
+            duration: 0.5,
+          }
+        )
 
-      const randomSequence = createRandomAttackSequence(15, randomHouseAttack)
+      const randomSequence = createRandomAttackSequence(10, randomHouseAttack)
       for (const [index, randomAttack] of randomSequence.entries()) {
         timeline.current.to(`#${attack}`, {
           duration: 0.05 + 0.005 * index ** 1.5,
@@ -125,19 +135,22 @@ function App() {
 
   return (
     <div
-      className="min-h-dvh bg-radial flex flex-col px-8 pt-8 pb-14 items-center"
+      className={cn(
+        'absolute min-h-dvh w-full bg-radial flex flex-col px-8 pt-8 pb-14 items-center',
+        'tablet:pb-8'
+      )}
       ref={container}
     >
       <Header className="" score={score} />
 
       {stage === 'picking' ? (
         <ButtonSelector
-          className="mt-[145px] mb-[154px]"
+          className="flex-grow flex flex-col items-center justify-center mt-[145px] mb-[154px] tablet:mt-[130px] tablet:mb-[100px]"
           onClick={handleAttack}
         />
       ) : (
         <ResultScreen
-          className="mt-[99px] mb-[52px]"
+          className="flex-grow mt-[99px] mb-[52px]"
           attack={attack}
           houseAttack={houseAttack}
           result={result}

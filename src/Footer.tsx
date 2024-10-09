@@ -21,7 +21,8 @@ export default function Footer() {
             className={cn(
               'w-32 h-10 border border-white rounded-[8px]',
               'text-[16px] text-white font-semibold leading-[normal] tracking-[2.5px] uppercase',
-              'hover:bg-white hover:text-darkblue'
+              'hover:bg-white hover:text-darkblue',
+              'tablet:absolute tablet:bottom-8 tablet:right-8'
             )}
           >
             Rules
@@ -30,7 +31,7 @@ export default function Footer() {
         <DialogContent
           className={cn(
             'flex flex-col gap-y-5 p-8 items-center',
-            'w-full h-full rounded-none tablet:w-fit tablet:h-auto tablet:rounded-[8px] tablet:pb-12'
+            'w-full h-full rounded-none tablet:w-[400px] tablet:h-auto tablet:rounded-[8px] tablet:pb-12'
           )}
         >
           <DialogHeader

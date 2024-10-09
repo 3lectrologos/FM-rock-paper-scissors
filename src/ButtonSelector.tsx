@@ -17,12 +17,17 @@ export default function ButtonSelector({
   onClick: (attack: Attack) => void
 }) {
   return (
-    <div className={cn('relative w-[227px] h-[227px]', className)}>
-      <Pentagon className="stroke-[22px]" />
+    <div
+      className={cn(
+        'relative w-[227px] h-[227px] tablet:scale-[1.43]',
+        className
+      )}
+    >
+      <Pentagon className="stroke-[18px]" />
 
       <AttackButton
         id={'scissors'}
-        className="absolute translate-x-[65px] -translate-y-[260px]"
+        className={cn('absolute translate-x-[0] -translate-y-[100%]')}
         onClick={() => {
           onClick('scissors')
         }}
@@ -32,7 +37,7 @@ export default function ButtonSelector({
 
       <AttackButton
         id={'paper'}
-        className="absolute translate-x-[172px] -translate-y-[180px]"
+        className="absolute translate-x-[100%] -translate-y-[20%]"
         onClick={() => {
           onClick('paper')
         }}
@@ -42,7 +47,7 @@ export default function ButtonSelector({
 
       <AttackButton
         id={'rock'}
-        className="absolute translate-x-[135px] -translate-y-[50px]"
+        className="absolute translate-x-[66%] translate-y-[100%]"
         onClick={() => {
           onClick('rock')
         }}
@@ -52,7 +57,7 @@ export default function ButtonSelector({
 
       <AttackButton
         id={'lizard'}
-        className="absolute -translate-x-[5px] -translate-y-[50px]"
+        className="absolute -translate-x-[66%] translate-y-[100%]"
         onClick={() => {
           onClick('lizard')
         }}
@@ -62,7 +67,7 @@ export default function ButtonSelector({
 
       <AttackButton
         id={'spock'}
-        className="absolute -translate-x-[45px] -translate-y-[180px]"
+        className="absolute -translate-x-[100%] -translate-y-[20%]"
         onClick={() => {
           onClick('spock')
         }}

@@ -23,7 +23,11 @@ export default function ResultScreen({
     <div className={cn('w-[311px] flex flex-col', className)}>
       <div className="flex justify-between mb-[62px]">
         <AttackDisplayWithText attack={attack} text="You picked" />
-        <AttackDisplayWithText attack={houseAttack} text="The house picked" />
+        <AttackDisplayWithText
+          className={cn(houseAttack === null && 'invisible')}
+          attack={houseAttack}
+          text="The house picked"
+        />
       </div>
       <ResultCard
         className={cn(result === null && 'invisible')}
@@ -49,12 +53,14 @@ function AttackDisplay({ attack }: { attack: Attack | null }) {
 function AttackDisplayWithText({
   attack,
   text,
+  className,
 }: {
   attack: Attack | null
   text: string
+  className?: string
 }) {
   return (
-    <div className="flex flex-col items-center gap-y-[17px]">
+    <div className={cn('flex flex-col items-center gap-y-[17px]', className)}>
       <AttackDisplay attack={attack} />
       <span className="text-[15px] text-white [text-shadow:_0_3px_3px_rgb(0_0_0_/_0.2)] font-bold leading-[32px] tracking-[1.875px] uppercase">
         {text}

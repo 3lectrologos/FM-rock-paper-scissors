@@ -14,11 +14,12 @@ export default function Header({
   return (
     <header
       className={cn(
-        'w-full flex justify-between items-center p-3 pl-6 border-[3px] border-white/30 rounded-[5px]',
+        'w-full max-w-[700px] flex justify-between items-center p-3 pl-6 border-[3px] border-white/30 rounded-[5px]',
+        'tablet:py-5 pl-8 pr-6 rounded-[15px]',
         className
       )}
     >
-      <Logo className="w-[49px] h-[48px]" />
+      <Logo className="w-[49px] h-[48px] tablet:w-[110px] tablet:h-[110px]" />
       <Score score={score} />
     </header>
   )
@@ -70,18 +71,27 @@ function Score({ score }: { score: number }) {
   return (
     <div
       className={cn(
-        'flex flex-col w-20 h-[72px] rounded-[4px] items-center p-[10px]',
+        'flex flex-col w-20 rounded-[4px] items-center py-[10px]',
         'bg-gradient-to-t from-[#f3f3f3] to-white',
         '[box-shadow:0_3px_3px_0_rgb(0_0_0_/_0.2)]',
-        'overflow-hidden'
+        'overflow-hidden',
+        'tablet:w-[150px] tablet:py-4 tablet:rounded-[8px]'
       )}
       ref={scoreRef}
     >
-      <span className="uppercase text-[10px] text-bluish font-semibold tracking-[1.563px] leading-[normal]">
+      <span
+        className={cn(
+          'uppercase text-[10px] text-bluish font-semibold tracking-[1.563px] leading-[normal]',
+          'tablet:text-[16px] tablet:tracking-[2.5px]'
+        )}
+      >
         Score
       </span>
       <span
-        className="text-[40px] text-darkgray font-bold leading-[40px]"
+        className={cn(
+          'text-[40px] text-darkgray font-bold leading-[40px]',
+          'tablet:text-[64px] tablet:leading-[64px]'
+        )}
         ref={textRef}
       >
         {score}
