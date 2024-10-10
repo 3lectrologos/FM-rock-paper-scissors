@@ -23,7 +23,6 @@ export default function ResultScreen({
 }) {
   const isTablet = useIsTablet()
   const attackContainerRef = useRef(null)
-  const [hasResult, setHasResult] = useState(false)
 
   useGSAP(
     () => {
@@ -31,16 +30,15 @@ export default function ResultScreen({
         return
       }
 
+      console.log('result', result, 'isTablet', isTablet)
+
       gsap.to(attackContainerRef.current, {
         delay: 0.3,
         duration: 0.25,
         columnGap: isTablet ? 350 : 0,
-        onComplete: () => {
-          setHasResult(true)
-        },
       })
     },
-    { dependencies: [result] }
+    { dependencies: [result, isTablet] }
   )
 
   return (
@@ -53,8 +51,7 @@ export default function ResultScreen({
       <div
         className={cn(
           'flex justify-between mb-[56px] tablet:mb-0 z-0',
-          'tablet:gap-x-16',
-          hasResult && 'tablet:gap-[350px]'
+          'tablet:gap-x-16'
         )}
         ref={attackContainerRef}
       >
