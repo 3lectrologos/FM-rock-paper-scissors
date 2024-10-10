@@ -7,6 +7,7 @@ import ResultScreen from '@/ResultScreen.tsx'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { cn } from '@/lib/utils.ts'
+import { useMediaQuery } from 'react-responsive'
 
 function getRandomAttack() {
   return attackList[Math.floor(Math.random() * attackList.length)] as Attack
@@ -51,6 +52,8 @@ function App() {
   const [houseAttack, setHouseAttack] = useState<Attack | null>(null)
   const [result, setResult] = useState<Result | null>(null)
 
+  const isTablet = useMediaQuery({ query: '(min-width: 700px)' })
+
   const container = useRef(null)
   const timeline = useRef<GSAPTimeline>()
   const { contextSafe } = useGSAP(
@@ -84,12 +87,12 @@ function App() {
       timeline.current
         .to(`#${attack}`, {
           duration: 0.3,
-          scale: 1.294,
-          translateX: '-26.5%',
-          translateY: '-30%',
+          scale: isTablet ? 2.05 : 1.294,
+          translateX: isTablet ? '-62%' : '-26.5%',
+          translateY: isTablet ? '83.5%' : '-30%',
           top: 0,
           left: 0,
-          ease: 'elastic.out(1, 1)',
+          ease: 'elastic.out(0.75, 0.5)',
           onComplete: () => {
             setStage('result')
           },
@@ -136,21 +139,21 @@ function App() {
   return (
     <div
       className={cn(
-        'absolute min-h-dvh w-full bg-radial flex flex-col px-8 pt-8 pb-14 items-center',
+        'relative min-h-dvh w-full bg-radial flex flex-col px-8 pt-8 pb-14 items-center overflow-hidden',
         'tablet:pb-8'
       )}
       ref={container}
     >
-      <Header className="" score={score} />
+      <Header className="flex" score={score} />
 
       {stage === 'picking' ? (
         <ButtonSelector
-          className="flex-grow flex flex-col items-center justify-center mt-[145px] mb-[154px] tablet:mt-[130px] tablet:mb-[100px]"
+          className="flex-grow flex flex-col items-center justify-center mt-[145px] mb-[154px] tablet:mt-[121px] tablet:mb-[60px]"
           onClick={handleAttack}
         />
       ) : (
         <ResultScreen
-          className="flex-grow mt-[99px] mb-[52px]"
+          className="flex-grow mt-[99px] mb-[52px] tablet:mt-[72px]"
           attack={attack}
           houseAttack={houseAttack}
           result={result}

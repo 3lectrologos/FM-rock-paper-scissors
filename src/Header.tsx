@@ -19,7 +19,7 @@ export default function Header({
         className
       )}
     >
-      <Logo className="w-[49px] h-[48px] tablet:w-[110px] tablet:h-[110px]" />
+      <Logo className="w-[49px] h-[48px] tablet:w-[111px] tablet:h-[110px]" />
       <Score score={score} />
     </header>
   )
@@ -38,8 +38,6 @@ function Score({ score }: { score: number }) {
 
   useGSAP(
     () => {
-      console.log(score, previousScore, scoreDiff)
-
       const duration = 0.1
 
       gsap.fromTo(

@@ -2,8 +2,6 @@ export default function Lizard({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="102"
-      height="103"
       viewBox="0 0 102 103"
       fill="none"
       className={className}

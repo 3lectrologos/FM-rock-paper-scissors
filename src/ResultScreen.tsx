@@ -20,8 +20,13 @@ export default function ResultScreen({
   className?: string
 }) {
   return (
-    <div className={cn('w-[311px] flex flex-col', className)}>
-      <div className="flex justify-between mb-[62px]">
+    <div
+      className={cn(
+        'w-[311px] flex flex-col tablet:w-full tablet:items-center',
+        className
+      )}
+    >
+      <div className="flex justify-between mb-[62px] tablet:gap-x-16 tablet:mb-0">
         <AttackDisplayWithText attack={attack} text="You picked" />
         <AttackDisplayWithText
           className={cn(houseAttack === null && 'invisible')}
@@ -30,7 +35,7 @@ export default function ResultScreen({
         />
       </div>
       <ResultCard
-        className={cn(result === null && 'invisible')}
+        className={cn(result === null && 'invisible', 'tablet:hidden')}
         result={result}
         onPlayAgain={onPlayAgain}
       />
@@ -41,13 +46,18 @@ export default function ResultScreen({
 function AttackDisplay({ attack }: { attack: Attack | null }) {
   if (attack === null) {
     return (
-      <div className="w-[132px] h-[133px]">
+      <div className="w-[132px] h-[133px] tablet:w-[297px] tablet:h-[299px]">
         <div className="w-[124px] h-[125px] bg-white/10 rounded-full" />
       </div>
     )
   }
 
-  return <AttackIcon className={cn('w-[132px] h-[133px]')} attack={attack} />
+  return (
+    <AttackIcon
+      className={cn('w-[132px] h-[133px] tablet:w-[297px] tablet:h-[299px]')}
+      attack={attack}
+    />
+  )
 }
 
 function AttackDisplayWithText({
@@ -60,9 +70,20 @@ function AttackDisplayWithText({
   className?: string
 }) {
   return (
-    <div className={cn('flex flex-col items-center gap-y-[17px]', className)}>
+    <div
+      className={cn(
+        'flex flex-col items-center gap-y-[17px]',
+        'tablet:flex-col-reverse tablet:gap-y-16',
+        className
+      )}
+    >
       <AttackDisplay attack={attack} />
-      <span className="text-[15px] text-white [text-shadow:_0_3px_3px_rgb(0_0_0_/_0.2)] font-bold leading-[32px] tracking-[1.875px] uppercase">
+      <span
+        className={cn(
+          'text-[15px] text-white [text-shadow:_0_3px_3px_rgb(0_0_0_/_0.2)] font-bold leading-[32px] tracking-[1.875px] uppercase',
+          'tablet:text-[24px] tablet:tracking-[3px]'
+        )}
+      >
         {text}
       </span>
     </div>

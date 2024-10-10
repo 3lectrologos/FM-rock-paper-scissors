@@ -4,10 +4,9 @@ import Rock from '@/icons/Rock.tsx'
 import Lizard from '@/icons/Lizard.tsx'
 import Spock from '@/icons/Spock.tsx'
 import Scissors from '@/icons/Scissors.tsx'
-import { ReactNode } from 'react'
-import { Button } from '@/components/ui/button.tsx'
 import { Attack } from '@/types.ts'
 import { cn } from '@/lib/utils.ts'
+import AttackButton from '@/AttackButton.tsx'
 
 export default function ButtonSelector({
   className,
@@ -19,7 +18,7 @@ export default function ButtonSelector({
   return (
     <div
       className={cn(
-        'relative w-[227px] h-[227px] tablet:scale-[1.43]',
+        'relative w-[227px] h-[227px] tablet:w-[325px] tablet:h-[325px]',
         className
       )}
     >
@@ -75,33 +74,5 @@ export default function ButtonSelector({
         <Spock />
       </AttackButton>
     </div>
-  )
-}
-
-function AttackButton({
-  onClick,
-  children,
-  id,
-  className,
-}: {
-  onClick: () => void
-  children: ReactNode
-  id?: string
-  className?: string
-}) {
-  return (
-    <Button
-      id={id}
-      className={cn(
-        'p-0 bg-transparent border-0 rounded-full h-auto w-auto',
-        'attack',
-        className
-      )}
-      asChild
-    >
-      <div className="cursor-pointer" onClick={onClick}>
-        {children}
-      </div>
-    </Button>
   )
 }
