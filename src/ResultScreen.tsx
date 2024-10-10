@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button.tsx'
 import AttackIcon from '@/icons/AttackIcon.tsx'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useIsTablet } from '@/use-is-tablet.ts'
 import Halo from '@/Halo.tsx'
 
