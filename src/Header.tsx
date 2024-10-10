@@ -14,7 +14,7 @@ export default function Header({
   return (
     <header
       className={cn(
-        'w-full max-w-[700px] flex justify-between items-center p-3 pl-6 border-[3px] border-white/30 rounded-[5px]',
+        'w-full max-w-[500px] flex justify-between items-center p-3 pl-6 border-[3px] border-white/30 rounded-[5px]',
         'tablet:py-5 pl-8 pr-6 rounded-[15px]',
         className
       )}

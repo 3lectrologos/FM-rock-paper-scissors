@@ -88,11 +88,11 @@ function App() {
         .to(`#${attack}`, {
           duration: 0.3,
           scale: isTablet ? 2.05 : 1.294,
-          translateX: isTablet ? '-173%' : '-26.5%',
-          translateY: isTablet ? '-31%' : '-30%',
-          top: '50%',
-          left: '50%',
-          ease: 'elastic.out(1, 0.75)',
+          translateX: isTablet ? '-173.5%' : '-26.5%',
+          translateY: isTablet ? '-31%' : '-10%',
+          top: isTablet ? '50%' : 0,
+          left: isTablet ? '50%' : 0,
+          ease: 'elastic.out(1.2, 0.7)',
           onComplete: () => {
             setStage('result')
           },
@@ -148,7 +148,7 @@ function App() {
 
       {stage === 'picking' ? (
         <ButtonSelector
-          className="flex-grow flex flex-col items-center justify-center mt-[145px] mb-[154px] tablet:mt-[121px] tablet:mb-[60px]"
+          className="flex-grow flex flex-col items-center justify-center mt-[125px] mb-[130px] tablet:mt-[121px] tablet:mb-[60px]"
           onClick={handleAttack}
         />
       ) : (

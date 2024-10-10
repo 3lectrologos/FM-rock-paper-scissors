@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button.tsx'
 import AttackIcon from '@/icons/AttackIcon.tsx'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useIsTablet } from '@/use-is-tablet.ts'
+import Halo from '@/Halo.tsx'
 
 export default function ResultScreen({
   attack,
@@ -22,6 +23,7 @@ export default function ResultScreen({
 }) {
   const isTablet = useIsTablet()
   const attackContainerRef = useRef(null)
+  const [hasResult, setHasResult] = useState(false)
 
   useGSAP(
     () => {
@@ -30,8 +32,12 @@ export default function ResultScreen({
       }
 
       gsap.to(attackContainerRef.current, {
+        delay: 0.3,
         duration: 0.25,
-        columnGap: 350,
+        columnGap: isTablet ? 350 : 0,
+        onComplete: () => {
+          setHasResult(true)
+        },
       })
     },
     { dependencies: [result] }
@@ -45,14 +51,27 @@ export default function ResultScreen({
       )}
     >
       <div
-        className="flex justify-between mb-[62px] tablet:gap-x-16 tablet:mb-0"
+        className={cn(
+          'flex justify-between mb-[56px] tablet:mb-0 z-0',
+          'tablet:gap-x-16',
+          hasResult && 'tablet:gap-[350px]'
+        )}
         ref={attackContainerRef}
       >
-        <AttackDisplayWithText attack={attack} text="You picked" />
         <AttackDisplayWithText
-          className={cn(houseAttack === null && 'invisible')}
+          className={cn(result === 'win' && 'z-[-1]')}
+          attack={attack}
+          text="You picked"
+          halo={result === 'win'}
+        />
+        <AttackDisplayWithText
+          className={cn(
+            houseAttack === null && 'invisible',
+            result === 'lose' && 'z-[-1]'
+          )}
           attack={houseAttack}
           text="The house picked"
+          halo={result === 'lose'}
         />
       </div>
       <ResultCard
@@ -68,7 +87,15 @@ export default function ResultScreen({
   )
 }
 
-function AttackDisplay({ attack }: { attack: Attack | null }) {
+function AttackDisplay({
+  attack,
+  halo,
+}: {
+  attack: Attack | null
+  halo?: boolean
+}) {
+  const isTablet = useIsTablet()
+
   if (attack === null) {
     return (
       <div className="w-[132px] h-[133px] tablet:w-[297px] tablet:h-[299px]">
@@ -78,20 +105,28 @@ function AttackDisplay({ attack }: { attack: Attack | null }) {
   }
 
   return (
-    <AttackIcon
-      className={cn('w-[132px] h-[133px] tablet:w-[297px] tablet:h-[299px]')}
-      attack={attack}
-    />
+    <Halo
+      size={isTablet ? 279 : 124}
+      xOffset={isTablet ? 10 : 5}
+      enabled={halo ?? false}
+    >
+      <AttackIcon
+        className={cn('w-[132px] h-[133px] tablet:w-[297px] tablet:h-[299px]')}
+        attack={attack}
+      />
+    </Halo>
   )
 }
 
 function AttackDisplayWithText({
   attack,
   text,
+  halo,
   className,
 }: {
   attack: Attack | null
   text: string
+  halo?: boolean
   className?: string
 }) {
   return (
@@ -102,7 +137,7 @@ function AttackDisplayWithText({
         className
       )}
     >
-      <AttackDisplay attack={attack} />
+      <AttackDisplay attack={attack} halo={halo} />
       <span
         className={cn(
           'text-[15px] text-white [text-shadow:_0_3px_3px_rgb(0_0_0_/_0.2)] font-bold leading-[32px] tracking-[1.875px] uppercase',
@@ -144,6 +179,7 @@ function ResultCard({
         {
           opacity: 1,
           scale: 1,
+          delay: 0.3,
           duration: 0.25,
         }
       )
@@ -159,7 +195,7 @@ function ResultCard({
         {
           scale: 1,
           opacity: 1,
-          delay: 0.25,
+          delay: 0.3 + 0.25,
           duration: 0.25,
           x: 0,
           y: 0,
