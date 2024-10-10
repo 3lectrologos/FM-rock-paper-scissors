@@ -8,6 +8,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { cn } from '@/lib/utils.ts'
 import { useIsTablet } from '@/use-is-tablet.ts'
+import { useLocalStorage } from 'usehooks-ts'
 
 function getRandomAttack() {
   return attackList[Math.floor(Math.random() * attackList.length)] as Attack
@@ -46,7 +47,7 @@ function createRandomAttackSequence(length: number, lastAttack: Attack) {
 }
 
 function App() {
-  const [score, setScore] = useState(0)
+  const [score, setScore] = useLocalStorage('score', 0)
   const [stage, setStage] = useState<Stage>('picking')
   const [attack, setAttack] = useState<Attack | null>(null)
   const [houseAttack, setHouseAttack] = useState<Attack | null>(null)
