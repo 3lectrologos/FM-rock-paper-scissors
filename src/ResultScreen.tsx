@@ -5,6 +5,7 @@ import AttackIcon from '@/icons/AttackIcon.tsx'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { useRef } from 'react'
+import { useIsTablet } from '@/use-is-tablet.ts'
 
 export default function ResultScreen({
   attack,
@@ -19,14 +20,34 @@ export default function ResultScreen({
   onPlayAgain: () => void
   className?: string
 }) {
+  const isTablet = useIsTablet()
+  const attackContainerRef = useRef(null)
+
+  useGSAP(
+    () => {
+      if (result === null) {
+        return
+      }
+
+      gsap.to(attackContainerRef.current, {
+        duration: 0.25,
+        columnGap: 350,
+      })
+    },
+    { dependencies: [result] }
+  )
+
   return (
     <div
       className={cn(
-        'w-[311px] flex flex-col tablet:w-full tablet:items-center',
+        'relative w-[311px] flex flex-col tablet:w-full tablet:items-center tablet:justify-center',
         className
       )}
     >
-      <div className="flex justify-between mb-[62px] tablet:gap-x-16 tablet:mb-0">
+      <div
+        className="flex justify-between mb-[62px] tablet:gap-x-16 tablet:mb-0"
+        ref={attackContainerRef}
+      >
         <AttackDisplayWithText attack={attack} text="You picked" />
         <AttackDisplayWithText
           className={cn(houseAttack === null && 'invisible')}
@@ -35,7 +56,11 @@ export default function ResultScreen({
         />
       </div>
       <ResultCard
-        className={cn(result === null && 'invisible', 'tablet:hidden')}
+        className={cn(
+          result === null && 'invisible',
+          isTablet &&
+            'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[25%]'
+        )}
         result={result}
         onPlayAgain={onPlayAgain}
       />
@@ -102,6 +127,7 @@ function ResultCard({
   const container = useRef(null)
   const text = useRef(null)
   const button = useRef(null)
+  const isTablet = useIsTablet()
 
   useGSAP(
     () => {
@@ -127,7 +153,8 @@ function ResultCard({
         {
           scale: 0,
           opacity: 0,
-          x: -500,
+          x: isTablet ? 0 : -500,
+          y: isTablet ? 500 : 0,
         },
         {
           scale: 1,
@@ -135,7 +162,8 @@ function ResultCard({
           delay: 0.25,
           duration: 0.25,
           x: 0,
-          ease: 'elastic.out(1, 0.75)',
+          y: 0,
+          ease: isTablet ? 'elastic.out(0.75, 1)' : 'elastic.out(1, 0.75)',
         }
       )
     },

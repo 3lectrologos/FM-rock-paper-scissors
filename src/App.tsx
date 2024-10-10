@@ -7,7 +7,7 @@ import ResultScreen from '@/ResultScreen.tsx'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { cn } from '@/lib/utils.ts'
-import { useMediaQuery } from 'react-responsive'
+import { useIsTablet } from '@/use-is-tablet.ts'
 
 function getRandomAttack() {
   return attackList[Math.floor(Math.random() * attackList.length)] as Attack
@@ -52,7 +52,7 @@ function App() {
   const [houseAttack, setHouseAttack] = useState<Attack | null>(null)
   const [result, setResult] = useState<Result | null>(null)
 
-  const isTablet = useMediaQuery({ query: '(min-width: 700px)' })
+  const isTablet = useIsTablet()
 
   const container = useRef(null)
   const timeline = useRef<GSAPTimeline>()
@@ -88,11 +88,11 @@ function App() {
         .to(`#${attack}`, {
           duration: 0.3,
           scale: isTablet ? 2.05 : 1.294,
-          translateX: isTablet ? '-62%' : '-26.5%',
-          translateY: isTablet ? '83.5%' : '-30%',
-          top: 0,
-          left: 0,
-          ease: 'elastic.out(0.75, 0.5)',
+          translateX: isTablet ? '-173%' : '-26.5%',
+          translateY: isTablet ? '-31%' : '-30%',
+          top: '50%',
+          left: '50%',
+          ease: 'elastic.out(1, 0.75)',
           onComplete: () => {
             setStage('result')
           },
